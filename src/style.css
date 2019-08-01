@@ -3,26 +3,21 @@ body {
 }
 
 .top {
-  position: absolute;
-  top: 10%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: baseline;
-  width: 40em;
+  text-align: center;
+  padding-top: 3em
 }
 .list {
-  position: absolute;
-  top: 20%;
+  text-align: center;
   left: 50%;
-  transform: translate(-50%, -50%);
-  width: 40em;
-  border: black;
-  display: flex;
-  flex-direction: column
 }
-span {
-  padding: 0.5em;
+
+/* span {
+   padding: 0.5em;
+} */
+
+.container {
+  text-align: center;
+  position: absolute;
+  left: 50%;
+  width: 40em;
 }
