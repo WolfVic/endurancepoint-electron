@@ -17,7 +17,8 @@ var loadFiles = document.getElementById('loadFiles'),
   classe = document.getElementById('classe'),
   sexe = document.getElementById('sexe'),
   distance = document.getElementById('distance'),
-  nom = document.getElementById('name')
+  nom = document.getElementById('name'),
+  snack = document.getElementById('snack')
 var filesEnd = [];
 let cheminSave = app.getPath("documents")
 
@@ -110,7 +111,7 @@ dlAll.onclick = async () => {
   type = sexe.value
   long = distance.value
   name = nom.value + ".xlsx"
-  file = document.getElementById('csv').files[0]
+  file = csv.files[0]
   let reader = new FileReader()
   reader.onload =async e => {
     filesEnd = []
@@ -118,6 +119,10 @@ dlAll.onclick = async () => {
     let result = await createFile(name, data, cla, type, long)
     filesEnd.push({name: name, data: result})
     saveFile(0)
+    snack.MaterialSnackbar.showSnackbar({
+      message: "Fichier enregistré",
+      timeout: 1500
+    })
 
   }
   reader.readAsText(file)
