@@ -18,14 +18,13 @@ function HMStoSecs(hms) {
 
 exports = module.exports = {}
 
-async function createFile(filename, donnees) {
+async function createFile(filename, donnees, classe, type, long) {
     const titre = filename
     try {
         console.log('titre: ', titre)
-        let classe = filename.match(/^\d{1}/)[0]
-        let type = filename.match(/f|g/) === null ? 'f'.toUpperCase() : filename.match(/f|g/)[0].toUpperCase()
-        let long = filename.match(/(\d+m)/)[0]
-        long = long.substring(0, long.length -1)
+        classe = classe? classe : filename.match(/^\d{1}/)[0]
+        type = type? type : filename.match(/f|g/) === null ? 'f'.toUpperCase() : filename.match(/f|g/)[0].toUpperCase()
+        long = long? long : filename.match(/(\d+m)/)[0].substring(0, long.length -1)
         const vitesse = type === 'F' ? vitesseList.get('F') : vitesseList.get(classe + type)
         console.log('classe: ', classe)
         console.log('type: ', type)
@@ -236,6 +235,9 @@ async function createFile(filename, donnees) {
         throw err;
     }
 }
+
+
+
 exports.createFile = createFile
 
 // var file = fs.readFileSync('./finish/3b1b6 270m filles 20min-2018-10-15.csv', {encoding: 'utf8'})

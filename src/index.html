@@ -6,11 +6,46 @@
   </head>
   <body>
     <main>
-      <input type="file" id="csv" multiple accept=".csv" style="display: none" onchange="handleFiles(this.files)">
+      <input type="file" id="csv" accept=".csv" style="display: none" onchange="handleFiles(this.files)">
       <div id="container">
         <div class="top">
-          <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="loadFiles">Charger Fichiers</button>
-          <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="dlAll" disabled>Tout enregistrer</button>
+          <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="loadFiles">Charger Fichier</button>
+          
+          <br>
+          <form id ="infos">
+            <div class="mdl-textfield mdl-js-textfield">
+              <label class="" for="classe">Classe</label>
+              <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="classe" placeholder="3">
+              <span class="mdl-textfield__error">ce n'est pas un nombre</span>
+            </div>
+            <br>
+            <!-- <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="filles">
+              <input type="radio" id="filles" class="mdl-radio__button" name="options" value="f">
+              <span class="mdl-radio__label">Filles</span>
+            </label>
+            <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="garcons">
+              <input type="radio" id="garcons" class="mdl-radio__button" name="options" value="g">
+              <span class="mdl-radio__label">Garçons</span>
+            </label> -->
+            <div class="mdl-textfield  mdl-js-textfield">
+                <label class="" for="sexe">Sexe</label>
+                <input class="mdl-textfield__input" type="text" pattern="^[fgFG].*" id="sexe" placeholder="g">
+                <span class="mdl-textfield__error">doit commencer par f ou g</span>
+              </div>
+            <br>
+            <div class="mdl-textfield  mdl-js-textfield">
+              <label class="" for="distance">Distance (m)</label>
+              <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="distance" placeholder="250">
+              <span class="mdl-textfield__error">ce n'est pas un nombre</span>
+            </div>
+            <br>
+            <div class="mdl-textfield  mdl-js-textfield">
+                <label class="" for="name">Nom du fichier</label>
+                <input class="mdl-textfield__input" type="text" pattern=".+" id="name" placeholder="3b1b6 garcons 250m 2019-09-15" style="width:30em">
+                <span class="mdl-textfield__error">il faut un nom de fichier</span>
+              </div>
+          </form>
+          <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="dlAll" disabled >Enregistrer</button>
         </div>
         <div class="list">
           <ul class="mdl-list" style="width: 40em" id="list">
