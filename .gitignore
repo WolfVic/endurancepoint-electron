@@ -1,3 +1,5 @@
 node_modules
 out
 csv/*
+yarn-error.log
+.env

@@ -28,7 +28,7 @@ loadFiles.onclick = () => {
 
 const saveFile = async (numero) => {
   try {
-    const chemin = dialog.showSaveDialog({
+    const chemin = await dialog.showSaveDialogSync({
       title: "Sauvegarde de " + filesEnd[numero].name,
       defaultPath: path.join(cheminSave,filesEnd[numero].name),
       filters: [{name: "Microsoft Excel", extensions: ['xlsx']}]
@@ -38,8 +38,17 @@ const saveFile = async (numero) => {
       throw Error('noPath')
     }
     let file = filesEnd[numero]
-      console.log(path.join(chemin, file.name))
-      fs.writeFileSync(chemin, file.data)
+    await fs.writeFileSync(chemin, file.data)
+    classe.value = ""
+    sexe.value = ""
+    distance.value = ""
+    nom.value = ""
+    csv.value = ""
+    dlAll.disabled = true;
+    snack.MaterialSnackbar.showSnackbar({
+      message: "Fichier enregistré",
+      timeout: 1500
+    })
   } catch (e) {
     if (e.message !== "noPath") {
       dialog.showMessageBox({
@@ -59,8 +68,9 @@ const saveFile = async (numero) => {
 
         }
       })
+    } else {
     }
-    console.error(e)
+    // console.error(e)
   }
 }
 
@@ -106,26 +116,37 @@ const enregistrerFichiers = async () => {
 
 // dlAll.onclick = () => enregistrerFichiers()
 dlAll.onclick = async () => {
-  let cla, type, long, name, file
-  cla = classe.value
-  type = sexe.value
-  long = distance.value
-  name = nom.value + ".xlsx"
-  file = csv.files[0]
-  let reader = new FileReader()
-  reader.onload =async e => {
-    filesEnd = []
-    let data = reader.result
-    let result = await createFile(name, data, cla, type, long)
-    filesEnd.push({name: name, data: result})
-    saveFile(0)
+  try {
+    let cla, type, long, name, file
+    cla = classe.value
+    type = sexe.value.slice(0,1).toUpperCase()
+    long = distance.value
+    if(cla && type && long) {
+      name = nom.value + ".xlsx"
+      file = csv.files[0]
+      let reader = new FileReader()
+      reader.onload = async e => {
+        filesEnd = [] /* TODO modifier si gestion de plusieurs fichiers */
+        let data = reader.result
+        let result = await createFile(name, data, cla, type, long)
+        filesEnd.push({name: name, data: result})
+        saveFile(0)
+      }
+      reader.readAsText(file)
+    } else {
+      snack.MaterialSnackbar.showSnackbar({
+        message: "Erreur: Manque d'informations (classe, sexe, distance)",
+        timeout: 2000
+      })
+    }
+  } catch (e) {
+    console.error("read text")
+    console.error(e)
     snack.MaterialSnackbar.showSnackbar({
-      message: "Fichier enregistré",
-      timeout: 1500
+      message: "Erreur: manque un fichier .csv",
+      timeout: 2000
     })
-
   }
-  reader.readAsText(file)
 
 }
 
@@ -136,12 +157,10 @@ const handleFiles = async files => {
       list.innerHTML =""
       let file = files[i]
       let name = file.name
-      let cla =  name.match(/^\d{1}/)[0]
-      let type = name.match(/f|g/) === null ? 'f'.toUpperCase() : name.match(/f|g/)[0].toUpperCase()
-      let long = name.match(/(\d+m)/)[0]
-      long = long.substring(0, long.length -1)
+      let cla =  name.match(/^\d{1}/) === null ? "" : name.match(/^\d{1}/)[0]
+      let type = name.match(/f|g/) === null ? "" : name.match(/f|g/)[0].toUpperCase()
+      let long = name.match(/(\d+m)/) === null ? "" : name.match(/(\d+m)/)[0].substring(0, name.match(/(\d+m)/)[0].length -1)
       classe.value = cla
-      console.log('type :', type);
       sexe.value = type  
       distance.value = long
       nom.value = name.slice(0, name.length - 4)

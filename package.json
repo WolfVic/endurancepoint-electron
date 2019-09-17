@@ -15,35 +15,14 @@
   "author": "vic16",
   "license": "MIT",
   "config": {
-    "forge": {
-      "packagerConfig": {},
-      "makers": [
-        {
-          "name": "@electron-forge/maker-squirrel",
-          "config": {
-            "name": "endurancepoint"
-          }
-        },
-        {
-          "name": "@electron-forge/maker-zip",
-          "platforms": [
-            "darwin"
-          ]
-        },
-        {
-          "name": "@electron-forge/maker-deb",
-          "config": {}
-        },
-        {
-          "name": "@electron-forge/maker-rpm",
-          "config": {}
-        }
-      ]
-    }
+    "forge": "./forge.config.js"
   },
   "dependencies": {
+    "dotenv": "^8.1.0",
+    "electron-is-dev": "^1.1.0",
     "electron-squirrel-startup": "^1.0.0",
-    "exceljs": "^1.13.0"
+    "exceljs": "^2.0.1",
+    "update-electron-app": "^1.5.0"
   },
   "devDependencies": {
     "@electron-forge/cli": "^6.0.0-beta.43",
@@ -51,6 +30,6 @@
     "@electron-forge/maker-rpm": "^6.0.0-beta.43",
     "@electron-forge/maker-squirrel": "^6.0.0-beta.43",
     "@electron-forge/maker-zip": "^6.0.0-beta.43",
-    "electron": "5.0.8"
+    "electron": "6.0.9"
   }
 }

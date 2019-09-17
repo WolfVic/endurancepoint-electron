@@ -1,8 +1,14 @@
-const { app, BrowserWindow, ipcMain } = require('electron');
+const { app, BrowserWindow, ipcMain, Menu } = require('electron');
+const isDev = require('electron-is-dev')
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) { // eslint-disable-line global-require
   app.quit();
 }
+
+require('update-electron-app')({
+  repo: "wolfvic/endurancepoint-electron",
+  updateInterval: "1 hour"
+})
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -15,11 +21,15 @@ const createWindow = () => {
     height: 600,
     webPreferences: {
       nodeIntegration: true
-    }
+    },
+    // icon: path.join(__dirname,'assets/icons/icon.png')
   });
 
   // and load the index.html of the app.
   mainWindow.loadURL(`file://${__dirname}/index.html`);
+
+  // Open the DevTools.
+  if(isDev) mainWindow.webContents.openDevTools();
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools();
@@ -36,7 +46,44 @@ const createWindow = () => {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', createWindow);
+app.on('ready', () => {
+  createWindow()
+  const template = [
+    {
+      label: 'Edit',
+      submenu: [
+        { role: 'undo' },
+        { role: 'redo'},
+        { type:'separator'},
+        {role: 'cut'},
+        {role:'copy'},
+        {role: 'paste'},
+        {role: 'pasteandmatchstyle'},
+        {role: 'delete'},
+        {role:'selectall'}
+      ]
+    },
+    {
+      label:'Aide',
+      submenu: [
+        // {
+        //   label: 'Télécharger logs',
+        //   click: () => {
+        //     dlLog()
+        //   }
+        // },
+        {
+          'label' : 'Contact',
+          click: () => {
+            shell.openExternal('mailto:vic16@hotmail.be?subject=[Trombinoscope]')
+          }
+        }
+      ]
+    }
+  ]
+  const menu = Menu.buildFromTemplate(template)
+  Menu.setApplicationMenu(menu)
+});
 
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {

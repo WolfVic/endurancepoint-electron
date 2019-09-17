@@ -1,5 +1,6 @@
 const fs = require('fs')
 const Excel = require('exceljs')
+const csv = Excel.csv
 const vitesseList = new Map()
 vitesseList.set('3G', {min: 2.25, max: 12})
 vitesseList.set('4G', {min:2.75, max: 12.5})
