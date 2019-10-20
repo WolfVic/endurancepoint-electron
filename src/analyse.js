@@ -59,7 +59,7 @@ async function createFile(filename, donnees, classe, type, long) {
                 key: 'total',
                 width: 10,
                 style: {
-                    numFmt: 'mm:ss'
+                    numFmt: 'hh:mm:ss'
                 }
             },
             {
