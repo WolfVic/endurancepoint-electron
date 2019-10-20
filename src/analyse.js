@@ -70,7 +70,7 @@ async function createFile(filename, donnees, classe, type, long) {
                 }
             }
         ]
-        ws.mergeCells('A1:D1')
+        ws.mergeCells('A1:F1')
         ws.getCell('A1').value = titre
         ws.getCell('A1').font = {
             bold: true,
@@ -146,7 +146,7 @@ async function createFile(filename, donnees, classe, type, long) {
                 const v = tri.get(i)
                 const nbTour = v.tours.length
                 const secTot = v.last.time
-                console.log('secTot :', secTot);
+                // console.log('secTot :', secTot);
                 const ms = long * nbTour / secTot
                 const kh = ms * 3.6
                 const moyTourS = secTot / nbTour
@@ -164,7 +164,7 @@ async function createFile(filename, donnees, classe, type, long) {
                 let info = {
                     id: {formula: v.id},
                     note: {formula:formula, result: undefined},
-                    kh: {formula:'brut!E2*D'+lastRowInfo+'/'+secTot+'*3.6'},
+                    kh: {formula:'brut!E2*D'+lastRowInfo+'/(E'+lastRowInfo+'*86400)*3.6'},
                     tour: nbTour,
                     total: {formula: secTot+'/86400'},
                     moyTour: {formula: `E${lastRowInfo}/D${lastRowInfo}`, result:undefined}
@@ -185,7 +185,7 @@ async function createFile(filename, donnees, classe, type, long) {
                     })
                 })
             } else {
-                console.log(i + ' : absent')
+                //console.log(i + ' : absent')
                 ws.addRow({id: i, note: 'ABSENT', kh:'ABSENT', tour: 'ABSENT', total: 'ABSENT', moyTour:'ABSENT'})
             }
         }

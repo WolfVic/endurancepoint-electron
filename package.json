@@ -1,7 +1,7 @@
 {
   "name": "endurancepoint",
   "productName": "endurancepoint",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "My Electron application description",
   "main": "src/index.js",
   "scripts": {
@@ -18,10 +18,10 @@
     "forge": "./forge.config.js"
   },
   "dependencies": {
-    "dotenv": "^8.1.0",
+    "dotenv": "^8.2.0",
     "electron-is-dev": "^1.1.0",
     "electron-squirrel-startup": "^1.0.0",
-    "exceljs": "^2.0.1",
+    "exceljs": "^3.2.0",
     "update-electron-app": "^1.5.0"
   },
   "devDependencies": {
