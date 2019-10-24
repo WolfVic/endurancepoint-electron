@@ -1085,10 +1085,10 @@ electron-winstaller@^4.0.0:
     lodash.template "^4.2.2"
     temp "^0.9.0"
 
-electron@6.0.9:
-  version "6.0.9"
-  resolved "https://registry.yarnpkg.com/electron/-/electron-6.0.9.tgz#fea15e9fec329248db500b33ba6544a26fe025a3"
-  integrity sha512-lFpSmDNyjpvJFwEnK897Soone3DV7D3ASFUb315H2VTVZSbKib9Kbrsovxf4c+e1q5hTdaONsGIm3Lb4CXIW1g==
+electron@6.0.12:
+  version "6.0.12"
+  resolved "https://registry.yarnpkg.com/electron/-/electron-6.0.12.tgz#85bf0061e32f660256cfde95488f1cb75253bc94"
+  integrity sha512-70ODZa1RP6K0gE9IV9YLCXPSyhLjXksCuYSSPb3MljbfwfHo5uE6X0CGxzm+54YuPdE2e7EPnWZxOOsJYrS5iQ==
   dependencies:
     "@types/node" "^10.12.18"
     electron-download "^4.1.0"
@@ -1133,10 +1133,10 @@ escape-string-regexp@^1.0.5:
   resolved "https://registry.yarnpkg.com/escape-string-regexp/-/escape-string-regexp-1.0.5.tgz#1b61c0562190a8dff6ae3bb2cf0200ca130b86d4"
   integrity sha1-G2HAViGQqN/2rjuyzwIAyhMLhtQ=
 
-exceljs@^3.1.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/exceljs/-/exceljs-3.1.0.tgz#544cc88d9926e6732f8df36b6f04df44e9306b13"
-  integrity sha512-j/6ocFcfA+K3K3tkO4JcggEeXcwAN05O0dqy5KnTb7FhGMvkVcMFxgfM5fRVRXpygQAQWszRk/9bHFCld8Hoew==
+exceljs@^3.2.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/exceljs/-/exceljs-3.2.0.tgz#285c704f88e5649dfa7552239718dee42b266b0b"
+  integrity sha512-CQGA0NS49k6ID2elpifdXVmyXL9Td8OZK/hwTfAHymSWjGKFfuMoue6ISWWQQ1lytEtlAvPMemhzIS1xxMgf8A==
   dependencies:
     archiver "^3.0.0"
     dayjs "^1.8.15"

@@ -1,7 +1,7 @@
 {
   "name": "endurancepoint",
   "productName": "endurancepoint",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "My Electron application description",
   "main": "src/index.js",
   "scripts": {
@@ -12,7 +12,7 @@
     "lint": "echo \"No linting configured\""
   },
   "keywords": [],
-  "author": "vic16",
+  "author": "Victor Santelé",
   "license": "MIT",
   "config": {
     "forge": "./forge.config.js"
@@ -21,7 +21,7 @@
     "dotenv": "^8.2.0",
     "electron-is-dev": "^1.1.0",
     "electron-squirrel-startup": "^1.0.0",
-    "exceljs": "^3.1.0",
+    "exceljs": "^3.2.0",
     "update-electron-app": "^1.5.0"
   },
   "devDependencies": {
@@ -31,6 +31,6 @@
     "@electron-forge/maker-squirrel": "^6.0.0-beta.43",
     "@electron-forge/maker-zip": "^6.0.0-beta.43",
     "@electron-forge/publisher-github": "^6.0.0-beta.45",
-    "electron": "6.0.9"
+    "electron": "6.0.12"
   }
 }
