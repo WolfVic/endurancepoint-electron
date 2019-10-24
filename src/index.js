@@ -1,5 +1,5 @@
-const { app, BrowserWindow, ipcMain, Menu } = require('electron');
-const isDev = require('electron-is-dev')
+const { app, BrowserWindow, ipcMain, Menu, shell } = require('electron');
+const  isDev = require('electron-is-dev');
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) { // eslint-disable-line global-require
   app.quit();
@@ -22,6 +22,7 @@ const createWindow = () => {
     webPreferences: {
       nodeIntegration: true
     },
+    show: false
     // icon: path.join(__dirname,'assets/icons/icon.png')
   });
 
@@ -31,8 +32,7 @@ const createWindow = () => {
   // Open the DevTools.
   if(isDev) mainWindow.webContents.openDevTools();
 
-  // Open the DevTools.
-  // mainWindow.webContents.openDevTools();
+  mainWindow.once('ready-to-show', () => mainWindow.show())
 
   // Emitted when the window is closed.
   mainWindow.on('closed', () => {
