@@ -36,7 +36,7 @@ module.exports = {
       "config": {
         "repository": {
           "owner": "wolfvic",
-          "name": "endurancepoint"
+          "name": "endurancepoint-electron"
         },
         "authToken": process.env.GITHB_TOKEN
       }

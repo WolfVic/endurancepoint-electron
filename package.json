@@ -18,10 +18,10 @@
     "forge": "./forge.config.js"
   },
   "dependencies": {
-    "dotenv": "^8.1.0",
+    "dotenv": "^8.2.0",
     "electron-is-dev": "^1.1.0",
     "electron-squirrel-startup": "^1.0.0",
-    "exceljs": "^2.0.1",
+    "exceljs": "^3.1.0",
     "update-electron-app": "^1.5.0"
   },
   "devDependencies": {
