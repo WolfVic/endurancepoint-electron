@@ -1,12 +1,27 @@
 const fs = require('fs')
 const Excel = require('exceljs')
 const csv = Excel.csv
-const vitesseList = new Map()
-vitesseList.set('3G', {min: 2.25, max: 12})
-vitesseList.set('4G', {min:2.75, max: 12.5})
-vitesseList.set('5G', {min: 3.15, max: 13})
-vitesseList.set('6G', {min: 3.15, max: 13})
-vitesseList.set('F', {min: 2.22, max: 11})
+const oldVitesseList = new Map()
+oldVitesseList.set('3G', {min: 2.25, max: 12})
+oldVitesseList.set('4G', {min:2.75, max: 12.5})
+oldVitesseList.set('5G', {min: 3.15, max: 13})
+oldVitesseList.set('6G', {min: 3.15, max: 13})
+oldVitesseList.set('F', {min: 2.22, max: 11})
+
+const newVitesseList = new Map()
+newVitesseList.set('3G', {min: 3.25, max: 13})
+newVitesseList.set('4G', {min:3.75, max: 13.5})
+newVitesseList.set('5G', {min: 4.25, max: 14})
+newVitesseList.set('6G', {min: 4.25, max: 14})
+newVitesseList.set('F', {min: 2.72, max: 12.5})
+
+const Cellules = {
+    vitesseMin: "brut!$F$2",
+    vitesseMax: "brut!$F$3",
+    pointsMin: "brut!$G$2",
+    pointsMax: "brut!$G$3",
+    distance: "brut!$E$2",
+}
 
 function map(x, in_min, in_max, out_min, out_max) {
     return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
@@ -19,10 +34,10 @@ function HMStoSecs(hms) {
 
 exports = module.exports = {}
 
-async function createFile(filename, donnees, classe, type, long) {
+async function createFile(filename, donnees, classe, type, long, cotation) {
+    const vitesseList = cotation === "old" ? oldVitesseList : newVitesseList;
     const titre = filename
     try {
-        console.log('titre: ', titre)
         classe = classe? classe : filename.match(/^\d{1}/)[0]
         type = type? type : filename.match(/f|g/) === null ? 'f'.toUpperCase() : filename.match(/f|g/)[0].toUpperCase()
         long = long? long : filename.match(/(\d+m)/)[0].substring(0, long.length -1)
@@ -93,10 +108,15 @@ async function createFile(filename, donnees, classe, type, long) {
             {
                 key: 'temps',
                 width: 10
+            },
+            {
+                key: 'diff',
+                width: 12
             }
         ]
-        brut.getRow(1).values = ['Id', 'Tour', 'Temps', '', 'Distance', 'Minimum', 'Maximum']
-        brut.getRow(2).values = ['', '', '', '', long, vitesse.min, vitesse.max]
+        brut.getRow(1).values = ['Id', 'Tour', 'Temps', 'Différence', 'Distance', 'Vitesse', 'Points']
+        brut.getRow(2).values = ['', '', '', '', long, vitesse.min, 0.5]
+        brut.getRow(3).values = ['', '', '', '', '', vitesse.max, 20]
         let dataRow = donnees.toString().split('\n')
         // let data = new Map()
         let data = []
@@ -146,25 +166,23 @@ async function createFile(filename, donnees, classe, type, long) {
                 const v = tri.get(i)
                 const nbTour = v.tours.length
                 const secTot = v.last.time
-                // console.log('secTot :', secTot);
-                const ms = long * nbTour / secTot
-                const kh = ms * 3.6
-                const moyTourS = secTot / nbTour
-                // console.log(secTot + '/' + nbTour +' : ' +moyTourS)
-                let date = new Date(null);
-                let date2 = new Date(null)
-                date.setSeconds(moyTourS); // specify value for SECONDS here
-                let moyTourM = date.toISOString().substr(14, 5);
-                date2.setSeconds(secTot)
-                let minTot = date2.toISOString().substr(14, 5)
+                // // console.log('secTot :', secTot);
+                // const moyTourS = secTot / nbTour
+                // // console.log(secTot + '/' + nbTour +' : ' +moyTourS)
+                // let date = new Date(null);
+                // let date2 = new Date(null)
+                // date.setSeconds(moyTourS); // specify value for SECONDS here
+                // let moyTourM = date.toISOString().substr(14, 5);
+                // date2.setSeconds(secTot)
+                // let minTot = date2.toISOString().substr(14, 5)
                 ws.addRow()
                 let lastRowInfo = ws.rowCount
-                let formula = '((C'+lastRowInfo+'-brut!$F$2)*(20-0.5)/(brut!$G$2-brut!$F$2)+0.5)'
+                let formula = `((C${lastRowInfo}-${Cellules.vitesseMin})*(${Cellules.pointsMax}-${Cellules.pointsMin})/(${Cellules.vitesseMax}-${Cellules.vitesseMin})+${Cellules.pointsMin})`
                 // console.log('formula :', formula);
                 let info = {
                     id: {formula: v.id},
                     note: {formula:formula, result: undefined},
-                    kh: {formula:'brut!E2*D'+lastRowInfo+'/(E'+lastRowInfo+'*86400)*3.6'},
+                    kh: {formula:Cellules.distance + '*D'+lastRowInfo+'/(E'+lastRowInfo+'*86400)*3.6'},
                     tour: nbTour,
                     total: {formula: secTot+'/86400'},
                     moyTour: {formula: `E${lastRowInfo}/D${lastRowInfo}`, result:undefined}
@@ -181,7 +199,8 @@ async function createFile(filename, donnees, classe, type, long) {
                     date.setSeconds(row.time)
                     brut.addRow({
                         tour: i + 1,
-                        temps: date.toISOString().substr(14, 5)
+                        temps: date.toISOString().substr(14, 5),
+                        diff: i > 0 ? getDiff(row.time, triEle[i-1].time) : ''
                     })
                 })
             } else {
@@ -189,52 +208,18 @@ async function createFile(filename, donnees, classe, type, long) {
                 ws.addRow({id: i, note: 'ABSENT', kh:'ABSENT', tour: 'ABSENT', total: 'ABSENT', moyTour:'ABSENT'})
             }
         }
-        // tri.forEach((v, k, m) => {
-        //     const nbTour = v.tours.length
-        //     const secTot = v.last.time
-        //     const ms = long * nbTour / secTot
-        //     const kh = ms * 3.6
-        //     const moyTourS = secTot / nbTour
-        //     // console.log(secTot + '/' + nbTour +' : ' +moyTourS)
-        //     let date = new Date(null);
-        //     let date2 = new Date(null)
-        //     date.setSeconds(moyTourS); // specify value for SECONDS here
-        //     let moyTourM = date.toISOString().substr(14, 5);
-        //     date2.setSeconds(secTot)
-        //     let minTot = date2.toISOString().substr(14, 5)
-        //     let info = {
-        //         id: v.id,
-        //         note: Math.round(map(kh, vitesse.min, vitesse.max, 0.5, 20) * 100) / 100,
-        //         kh: Math.round(kh * 100) / 100,
-        //         tour: nbTour,
-        //         total: minTot,
-        //         moyTour: moyTourM
-        //     }
-        //     resultat.set(v.id, info)
-        //     ws.addRow(info)
-        //     brut.addRow()
-        //     let last = brut.rowCount
-        //     brut.mergeCells(last, 1, last, 3)
-        //     brut.getCell(last, 1).value = "Eleve: " + v.id
-        //     let tri = v.tours.sort((a,b) => a.time - b.time)
-        //     tri.forEach((row, i) => {
-        //         let date = new Date(null)
-        //         date.setSeconds(row.time)
-        //         brut.addRow({
-        //             tour: i,
-        //             temps: date.toISOString().substr(14, 5)
-        //         })
-        //     })
-        // })
-
-        
-        // await wb.xlsx.writeFile('./finish/' +titre + '.xlsx');
-        // return toSend ? mail.send(to, titre, titre + '.xlsx') : console.log('Fichier écrit');
         return wb.xlsx.writeBuffer();
     }
     catch (err) {
         throw err;
     }
+}
+
+function getDiff(cur, prev) {
+    const date = new Date(null);
+    const diff = cur - prev
+    date.setSeconds(diff);
+    return date.toISOString().substr(14, 5)
 }
 
 

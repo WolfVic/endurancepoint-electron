@@ -22,6 +22,16 @@ var loadFiles = document.getElementById('loadFiles'),
 var filesEnd = [];
 let cheminSave = app.getPath("documents")
 
+function getTypeCotation() {
+  let radios = document.getElementsByName('points');
+
+for (let i = 0, length = radios.length; i < length; i++) {
+  if (radios[i].checked) {
+    return radios[i].value
+  }
+}
+}
+
 loadFiles.onclick = () => {
   csv.click()
 }
@@ -33,7 +43,6 @@ const saveFile = async (numero) => {
       defaultPath: path.join(cheminSave,filesEnd[numero].name),
       filters: [{name: "Microsoft Excel", extensions: ['xlsx']}]
     })
-    console.log(chemin)
     if (chemin === undefined) {
       throw Error('noPath')
     }
@@ -88,7 +97,6 @@ const enregistrerFichiers = async () => {
     filesEnd.forEach(file => {
       console.log(path.join(chemin[0], file.name))
       fs.writeFileSync(path.join(chemin[0], file.name), file.data)
-
     })
   } catch (e) {
     if (e.message !== "noPath") {
@@ -117,10 +125,11 @@ const enregistrerFichiers = async () => {
 // dlAll.onclick = () => enregistrerFichiers()
 dlAll.onclick = async () => {
   try {
-    let cla, type, long, name, file
+    let cla, type, long, name, file, cot
     cla = classe.value
     type = sexe.value.slice(0,1).toUpperCase()
     long = distance.value
+    cot = getTypeCotation()
     if(cla && type && long) {
       name = nom.value + ".xlsx"
       file = csv.files[0]
@@ -128,7 +137,7 @@ dlAll.onclick = async () => {
       reader.onload = async e => {
         filesEnd = [] /* TODO modifier si gestion de plusieurs fichiers */
         let data = reader.result
-        let result = await createFile(name, data, cla, type, long)
+        let result = await createFile(name, data, cla, type, long, cot)
         filesEnd.push({name: name, data: result})
         saveFile(0)
       }

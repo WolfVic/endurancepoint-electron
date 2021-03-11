@@ -14,9 +14,17 @@
           <br>
           <form id ="infos">
             <div class="mdl-textfield mdl-js-textfield">
-              <label class="" for="classe">Classe</label>
-              <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="classe" placeholder="3">
-              <span class="mdl-textfield__error">ce n'est pas un nombre</span>
+              <label class="" for="classe">Classe:</label>
+              <select name="classe" id="classe">
+                <option value="">Sélectioner</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="-1">autre</option>
+              </select>
+              <!-- <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="classe" placeholder="3">
+              <span class="mdl-textfield__error">ce n'est pas un nombre</span> -->
             </div>
             <br>
             <!-- <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="filles">
@@ -29,23 +37,47 @@
             </label> -->
             <div class="mdl-textfield  mdl-js-textfield">
                 <label class="" for="sexe">Sexe</label>
-                <input class="mdl-textfield__input" type="text" pattern="^[fgFG].*" id="sexe" placeholder="G">
+                <!-- <input class="mdl-textfield__input" type="text" pattern="^[fgFG].*" id="sexe" placeholder="G"> -->
+                <select name="sexe" id="sexe">
+                  <option value="">Sélectionner</option>
+                  <option value="F">F</option>
+                  <option value="G">G</option>
+                </select>
                 <span class="mdl-textfield__error">doit commencer par F ou G</span>
               </div>
             <br>
             <div class="mdl-textfield  mdl-js-textfield">
               <label class="" for="distance">Distance (m)</label>
-              <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="distance" placeholder="250">
+              <input class="mdl-textfield__input" type="number" pattern="-?[0-9]*(\.[0-9]+)?" id="distance" placeholder="250">
               <span class="mdl-textfield__error">ce n'est pas un nombre</span>
             </div>
             <br>
             <div class="mdl-textfield  mdl-js-textfield">
-                <label class="" for="name">Nom du fichier</label>
-                <input class="mdl-textfield__input" type="text" pattern=".+" id="name" placeholder="3b1b6 garcons 250m 2019-09-15" style="width:30em">
-                <span class="mdl-textfield__error">il faut un nom de fichier</span>
-              </div>
+              <label class="" for="name">Nom du fichier</label>
+              <input class="mdl-textfield__input" type="text" pattern=".+" id="name" placeholder="3b1b6 garcons 250m 2019-09-15" style="width:30em">
+              <span class="mdl-textfield__error">il faut un nom de fichier</span>
+            </div>
+            <div>
+              <span>Cotations: </span>
+              <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="ancien">
+                <input type="radio" id="ancien" class="mdl-radio__button" name="points" value="old" checked>
+                <span class="mdl-radio__label">Ancienne</span>
+                <div class="mdl-tooltip" data-mdl-for="ancien">
+                  Anciennes grilles de cotations
+                </div>
+              </label>
+              <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="nouveau">
+                <input type="radio" id="nouveau" class="mdl-radio__button" name="points" value="new">
+                <span class="mdl-radio__label">Nouvelle</span>
+                <div class="mdl-tooltip" data-mdl-for="nouveau">
+                  Nouvelles grilles de cotations
+                </div>
+              </label>
+            </div>
           </form>
-          <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="dlAll" disabled >Enregistrer</button>
+          <div style="padding-top: 1.2em;">
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="dlAll" disabled >Enregistrer</button>
+          </div>
         </div>
         <div class="list">
           <ul class="mdl-list" style="width: 40em" id="list">
