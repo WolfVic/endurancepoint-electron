@@ -38,7 +38,7 @@ module.exports = {
           "owner": "wolfvic",
           "name": "endurancepoint-electron"
         },
-        // "authToken": process.env.GITHUB_TOKEN
+        "authToken": process.env.GITHUB_TOKEN
       }
     }
   ],
