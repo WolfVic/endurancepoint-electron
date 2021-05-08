@@ -1,7 +1,7 @@
 {
   "name": "endurancepoint",
   "productName": "endurancepoint",
-  "version": "1.1.0",
+  "version": "1.1.2",
   "description": "My Electron application description",
   "main": "src/index.js",
   "scripts": {

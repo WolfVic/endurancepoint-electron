@@ -3,17 +3,17 @@ const Excel = require('exceljs')
 const csv = Excel.csv
 const oldVitesseList = new Map()
 oldVitesseList.set('3G', {min: 2.25, max: 12})
-oldVitesseList.set('4G', {min:2.75, max: 12.5})
+oldVitesseList.set('4G', {min: 2.75, max: 12.5})
 oldVitesseList.set('5G', {min: 3.15, max: 13})
 oldVitesseList.set('6G', {min: 3.15, max: 13})
-oldVitesseList.set('F', {min: 2.22, max: 11})
+oldVitesseList.set('F',  {min: 2.22, max: 11})
 
 const newVitesseList = new Map()
-newVitesseList.set('3G', {min: 3.25, max: 13})
-newVitesseList.set('4G', {min:3.75, max: 13.5})
-newVitesseList.set('5G', {min: 4.25, max: 14})
-newVitesseList.set('6G', {min: 4.25, max: 14})
-newVitesseList.set('F', {min: 2.72, max: 12.5})
+newVitesseList.set('3G', {min: 2.75, max: 12.50})
+newVitesseList.set('4G', {min: 3.25, max: 13.00})
+newVitesseList.set('5G', {min: 3.75, max: 13.50})
+newVitesseList.set('6G', {min: 3.75, max: 13.50})
+newVitesseList.set('F',  {min: 2.25, max: 12.00})
 
 const Cellules = {
     vitesseMin: "brut!$F$2",
