@@ -85,7 +85,7 @@ app.on('ready', () => {
     }
   ]
   const menu = Menu.buildFromTemplate(template)
-  Menu.setApplicationMenu(menu)
+  if (!isDev) Menu.setApplicationMenu(menu)
 });
 
 // Quit when all windows are closed.

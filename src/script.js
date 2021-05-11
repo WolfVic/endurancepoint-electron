@@ -22,16 +22,6 @@ var loadFiles = document.getElementById('loadFiles'),
 var filesEnd = [];
 let cheminSave = app.getPath("documents")
 
-function getTypeCotation() {
-  let radios = document.getElementsByName('points');
-
-for (let i = 0, length = radios.length; i < length; i++) {
-  if (radios[i].checked) {
-    return radios[i].value
-  }
-}
-}
-
 loadFiles.onclick = () => {
   csv.click()
 }
@@ -129,7 +119,6 @@ dlAll.onclick = async () => {
     cla = classe.value
     type = sexe.value.slice(0,1).toUpperCase()
     long = distance.value
-    cot = getTypeCotation()
     if(cla && type && long) {
       name = nom.value + ".xlsx"
       file = csv.files[0]
@@ -137,7 +126,7 @@ dlAll.onclick = async () => {
       reader.onload = async e => {
         filesEnd = [] /* TODO modifier si gestion de plusieurs fichiers */
         let data = reader.result
-        let result = await createFile(name, data, cla, type, long, cot)
+        let result = await createFile(name, data, cla, type, long)
         filesEnd.push({name: name, data: result})
         saveFile(0)
       }
@@ -207,4 +196,3 @@ const handleFiles = async files => {
     }
   }
 }
-

@@ -3,25 +3,30 @@
   <head>
     <meta charset="utf-8">
     <title>Endurance Point</title>
+
+    <link rel="stylesheet" href='./style.css'>
+    <link rel="stylesheet" href='./material/material.min.css'>
+    <script src="material/material.min.js"></script>
+    <link rel="stylesheet" href="material/materialIcons.css">
   </head>
   <body>
     <main>
       <input type="file" id="csv" accept=".csv" style="display: none" onchange="handleFiles(this.files)">
       <div id="container">
         <div class="top">
-          <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="loadFiles">Charger Fichier</button>
+          <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" id="loadFiles">Charger Fichier</button>
           
           <br>
           <form id ="infos">
-            <div class="mdl-textfield mdl-js-textfield">
+            <div class="mdl-textfield mdl-js-textfield ">
               <label class="" for="classe">Classe:</label>
-              <select name="classe" id="classe">
-                <option value="">Sélectioner</option>
+              <select class="mdl-textfield__input" name="classe" id="classe">
+                <option value=""></option>
                 <option value="3">3</option>
                 <option value="4">4</option>
                 <option value="5">5</option>
                 <option value="6">6</option>
-                <option value="-1">autre</option>
+                <option value="-1" disabled>autre</option>
               </select>
               <!-- <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="classe" placeholder="3">
               <span class="mdl-textfield__error">ce n'est pas un nombre</span> -->
@@ -35,11 +40,11 @@
               <input type="radio" id="garcons" class="mdl-radio__button" name="options" value="g">
               <span class="mdl-radio__label">Garçons</span>
             </label> -->
-            <div class="mdl-textfield  mdl-js-textfield">
-                <label class="" for="sexe">Sexe</label>
+            <div class="mdl-textfield mdl-js-textfield ">
+              <label class="" for="sexe">Sexe: </label>
                 <!-- <input class="mdl-textfield__input" type="text" pattern="^[fgFG].*" id="sexe" placeholder="G"> -->
-                <select name="sexe" id="sexe">
-                  <option value="">Sélectionner</option>
+                <select class="mdl-textfield__input" name="sexe" id="sexe">
+                  <option value=""></option>
                   <option value="F">F</option>
                   <option value="G">G</option>
                 </select>
@@ -57,23 +62,6 @@
               <input class="mdl-textfield__input" type="text" pattern=".+" id="name" placeholder="3b1b6 garcons 250m 2019-09-15" style="width:30em">
               <span class="mdl-textfield__error">il faut un nom de fichier</span>
             </div>
-            <div>
-              <span>Cotations: </span>
-              <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="ancien">
-                <input type="radio" id="ancien" class="mdl-radio__button" name="points" value="old" checked>
-                <span class="mdl-radio__label">Ancienne</span>
-                <div class="mdl-tooltip" data-mdl-for="ancien">
-                  Anciennes grilles de cotations
-                </div>
-              </label>
-              <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="nouveau">
-                <input type="radio" id="nouveau" class="mdl-radio__button" name="points" value="new">
-                <span class="mdl-radio__label">Nouvelle</span>
-                <div class="mdl-tooltip" data-mdl-for="nouveau">
-                  Nouvelles grilles de cotations
-                </div>
-              </label>
-            </div>
           </form>
           <div style="padding-top: 1.2em;">
             <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="dlAll" disabled >Enregistrer</button>
@@ -89,12 +77,7 @@
         <div class="mdl-snackbar__text"></div>
         <button class="mdl-snackbar__action" type="button"></button>
       </div>
-
-      <link rel="stylesheet" href='./style.css'>
-      <script src="script.js"></script>
-      <link rel="stylesheet" href='./material/material.min.css'>
-      <script src="material/material.min.js"></script>
-      <link rel="stylesheet" href="material/materialIcons.css">
     </main>
+    <script src="script.js"></script>
   </body>
 </html>

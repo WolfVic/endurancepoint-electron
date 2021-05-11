@@ -1,12 +1,12 @@
 const fs = require('fs')
 const Excel = require('exceljs')
 const csv = Excel.csv
-const oldVitesseList = new Map()
-oldVitesseList.set('3G', {min: 2.25, max: 12})
-oldVitesseList.set('4G', {min: 2.75, max: 12.5})
-oldVitesseList.set('5G', {min: 3.15, max: 13})
-oldVitesseList.set('6G', {min: 3.15, max: 13})
-oldVitesseList.set('F',  {min: 2.22, max: 11})
+// const oldVitesseList = new Map()
+// oldVitesseList.set('3G', {min: 2.25, max: 12})
+// oldVitesseList.set('4G', {min: 2.75, max: 12.5})
+// oldVitesseList.set('5G', {min: 3.15, max: 13})
+// oldVitesseList.set('6G', {min: 3.15, max: 13})
+// oldVitesseList.set('F',  {min: 2.22, max: 11})
 
 const newVitesseList = new Map()
 newVitesseList.set('3G', {min: 2.75, max: 12.50})
@@ -34,8 +34,8 @@ function HMStoSecs(hms) {
 
 exports = module.exports = {}
 
-async function createFile(filename, donnees, classe, type, long, cotation) {
-    const vitesseList = cotation === "old" ? oldVitesseList : newVitesseList;
+async function createFile(filename, donnees, classe, type, long) {
+    const vitesseList = newVitesseList
     const titre = filename
     try {
         classe = classe? classe : filename.match(/^\d{1}/)[0]
